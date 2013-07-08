@@ -29,6 +29,7 @@ Converts to CamelCase, mixedCamel, delimited_string, UPPER, LOWER
     # To morph acceccor keys
     $obj = Object::Accessor->new(qw /CamelCase mixedCase delim_str UPPER lower/);
     $camel = key_morph($obj,'camel');
+    
 =head1 EXPORT
 
 This module exports key_morph, to_camel, to_mixed and to_delim.
@@ -80,7 +81,7 @@ Perl Arstistic License
 use 5.010;
 use warnings;
 use strict;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use base qw(Exporter);
 our @EXPORT = qw(to_mixed to_camel to_delim key_morph);
