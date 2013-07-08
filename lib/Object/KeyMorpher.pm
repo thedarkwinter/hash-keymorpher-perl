@@ -15,16 +15,19 @@ Converts to CamelCase, mixedCamel, delimited_string, UPPER, LOWER
 =head1 SYNOPSYS
 
     use Object::KeyMorpher; # import all, or
-    use Object::KeyMorpher qw (key_morph to_camel to_mixed to_delim); # import specific subs
+    use Object::KeyMorpher qw (key_morph to_camel to_mixed  to_under to_delim); # import specific subs
 
     # To use the string converters:
     $res = to_camel('my_string'); # MyString
     $res = to_mixed('my_string'); # myString
-    $res = to_camel('myString');  # my_string
+    $res = to_under('myString');  # my_string
+    $res = to_delim('myString','-');  # my-string
 
-    # To morph keys in a hash:
+    # To morph keys in a hash, key_morph($hash,$method,$delim);
+    # method is one of camel,mixed,under,delim,upper,lower
     $h1 = { 'level_one' => { 'LevelTwo' => 'foo' } };
-    $delim= key_morph($h1,'delim','_');  # { 'level_one' => { 'level_two' => 'foo' } };
+    $mixed = key_morph($h1,'mixed');  # { 'levelOne' => { 'levelTwo' => 'foo' } };
+    $delim = key_morph($h1,'delim','-');  # { 'level-one' => { 'level-two' => 'foo' } };
     
     # To morph acceccor keys
     $obj = Object::Accessor->new(qw /CamelCase mixedCase delim_str UPPER lower/);
@@ -32,7 +35,7 @@ Converts to CamelCase, mixedCamel, delimited_string, UPPER, LOWER
     
 =head1 EXPORT
 
-This module exports key_morph, to_camel, to_mixed and to_delim.
+This module exports key_morph, to_camel, to_mixed, to_under and to_delim.
 You will probably only need key_morph unless you really want the others.
 
 
@@ -56,9 +59,13 @@ Convers string to CamelCase
 
 Convers string to mixedCamelCase
 
+=head2 to_under($str)
+
+Convers string to underscore_separated 
+
 =head2 to_delim($str,$delim)
 
-Convers string to delimted_string (delimited by second parameter)
+Convers string to custom delimited-string (delimited by second parameter)
 
 =head2 to_upper($str)
 
@@ -81,10 +88,10 @@ Perl Arstistic License
 use 5.010;
 use warnings;
 use strict;
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use base qw(Exporter);
-our @EXPORT = qw(to_mixed to_camel to_delim key_morph);
+our @EXPORT = qw(to_mixed to_camel to_under to_delim key_morph);
 
 # warning, _split_words will return lower case! Should only be used internally which is why its not exported
 sub _split_words {
@@ -99,12 +106,13 @@ sub to_upper { return uc join '', _split_words(shift); }
 sub to_lower { return lc join '', _split_words(shift); }
 sub to_mixed { return lcfirst to_camel(shift); }
 sub to_camel { return join('', map{ ucfirst $_ } _split_words(shift)); }
+sub to_under { return lc(join('_', map { $_ } _split_words($_[0]))); }
 sub to_delim { return lc(join( defined $_[1]?$_[1]:'', map { $_ } _split_words($_[0]))); }
 
 # recursively process hash
 sub key_morph {
     my ($inp,$sub,$delim) = @_;
-    my $disp = { upper => \&to_upper, lower => \&to_lower, mixed => \&to_mixed, camel => \&to_camel, delim => \&to_delim };
+    my $disp = { upper => \&to_upper, lower => \&to_lower, mixed => \&to_mixed, camel => \&to_camel, under => \&to_under, delim => \&to_delim };
     return $inp unless defined $disp->{$sub};
     
     my $r = ref($inp);
