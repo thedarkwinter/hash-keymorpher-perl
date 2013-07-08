@@ -3,5 +3,5 @@
 use Test::More tests => 1;
 
 BEGIN {
-    use_ok('Hash::KeyMorpher');
+    use_ok('Object::KeyMorpher');
 }

@@ -1,10 +1,10 @@
-package Hash::KeyMorpher;
+package Object::KeyMorpher;
 
 =pod
 
 =head1 NAME
 
-Hash::KeyMorpher
+Object::KeyMorpher
 
 =head1 DESCRIPTION
 
@@ -14,8 +14,8 @@ Converts to CamelCase, mixedCamel, delimited_string, UPPER, LOWER
 
 =head1 SYNOPSYS
 
-    use Hash::Keymorpher; # import all, or
-    use Hash::Keymorpher qw (key_morph to_camel to_mixed to_delim); # import specific subs
+    use Object::KeyMorpher; # import all, or
+    use Object::KeyMorpher qw (key_morph to_camel to_mixed to_delim); # import specific subs
 
     # To use the string converters:
     $res = to_camel('my_string'); # MyString
@@ -24,9 +24,11 @@ Converts to CamelCase, mixedCamel, delimited_string, UPPER, LOWER
 
     # To morph keys in a hash:
     $h1 = { 'level_one' => { 'LevelTwo' => 'foo' } };
-    $camel = key_morph($h1,'delim','_');  # { 'level_one' => { 'level_two' => 'foo' } };
-
-
+    $delim= key_morph($h1,'delim','_');  # { 'level_one' => { 'level_two' => 'foo' } };
+    
+    # To morph acceccor keys
+    $obj = Object::Accessor->new(qw /CamelCase mixedCase delim_str UPPER lower/);
+    $camel = key_morph($obj,'camel');
 =head1 EXPORT
 
 This module exports key_morph, to_camel, to_mixed and to_delim.
@@ -78,7 +80,7 @@ Perl Arstistic License
 use 5.010;
 use warnings;
 use strict;
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use base qw(Exporter);
 our @EXPORT = qw(to_mixed to_camel to_delim key_morph);
@@ -105,8 +107,20 @@ sub key_morph {
     return $inp unless defined $disp->{$sub};
     
     my $r = ref($inp);
+    #print "$inp ($r)\n";
     return {map { $disp->{$sub}->($_,$delim) => key_morph($inp->{$_},$sub,$delim); } keys %$inp} if ($r eq 'HASH');
     return [ map key_morph($_,$sub,$delim), @$inp ] if ($r eq 'ARRAY');
+    
+    if ($r eq 'Object::Accessor') {
+        foreach my $a ($inp->ls_accessors()) {
+            my $v = $disp->{$sub}->($a,$delim);
+            next if $v eq $a;
+            $inp->mk_accessors($v);
+            $inp->{$v} = key_morph($inp->{$a},$sub,$delim);
+            delete $inp->{$a};
+            }
+        return $inp;
+    }
     return $inp;
 }
 

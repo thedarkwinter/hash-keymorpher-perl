@@ -2,6 +2,8 @@ Makefile.PL
 MANIFEST
 Changes
 README
-lib/Hash/KeyMorpher.pm
+lib/Object/KeyMorpher.pm
 t/000-load.t
-t/001-keymorpher.t
+t/001-strings.t
+t/002-hashes.t
+t/003-accessors.t
