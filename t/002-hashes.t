@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-use Object::KeyMorpher;
+use Hash::KeyMorpher;
 use Test::More tests => 7;
 
 # key_morph hashes

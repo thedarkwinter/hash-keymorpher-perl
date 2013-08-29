@@ -1,3 +1,7 @@
+0.08 : Thu 28 Aug 2013
+    - Removed Accessor support as it wasn't good, and quite pointless
+    - Renamed back to Hash::KeyMorpher
+
 0.07 : Mon 08 July 2013
     - Added sub to_under and key_morph method 'under'
     - to_delim is now left optional for custom delimeted strings

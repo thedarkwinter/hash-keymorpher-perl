@@ -1,4 +1,4 @@
-Object::KeyMorpher
+Hash::KeyMorpher
 By: Michael Holloway <michael@thedarkwinter.com>
 
 
@@ -6,7 +6,7 @@ By: Michael Holloway <michael@thedarkwinter.com>
 DESCRIPTION
 ============
 
-Deeply change the nameing conventions for keys in Objects structures, or simply change strings between naming conventions.
+Deeply change the nameing conventions for keys in Hash structures, or simply change strings between naming conventions.
 
 
 ============
@@ -23,8 +23,8 @@ make install
 USAGE
 ============
 
-use Object::Keymorpher; # import all, or
-use Object::Keymorpher qw (key_morph to_camel to_mixed to_delim); # import specific subs
+use Hash::Keymorpher; # import all, or
+use Hash::Keymorpher qw (key_morph to_camel to_mixed to_delim); # import specific subs
 
 # To use the string converters:
 $res = to_camel('my_string'); # MyString

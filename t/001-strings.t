@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-use Object::KeyMorpher;
+use Hash::KeyMorpher;
 use Test::More tests => 33;
 
 # define strings
@@ -12,13 +12,13 @@ my $s5 = 'MYVAR';
 my $s6 = 'myvar';
 
 # _split_words
-is_deeply([Object::KeyMorpher::_split_words($s1)],['my','var'],"_split_words ($s1)");
-is_deeply([Object::KeyMorpher::_split_words($s2)],['my','var'],"_split_words ($s2)");
-is_deeply([Object::KeyMorpher::_split_words($s3)],['my','var'],"_split_words ($s3)");
-is_deeply([Object::KeyMorpher::_split_words($s4)],['my','bad','var'],"_split_words ($s4)");
-is_deeply([Object::KeyMorpher::_split_words($s4)],['my','bad','var'],"_split_words ($s4)");
-is_deeply([Object::KeyMorpher::_split_words($s5)],['myvar'],"_split_words ($s5)");
-is_deeply([Object::KeyMorpher::_split_words($s6)],['myvar'],"_split_words ($s6)");
+is_deeply([Hash::KeyMorpher::_split_words($s1)],['my','var'],"_split_words ($s1)");
+is_deeply([Hash::KeyMorpher::_split_words($s2)],['my','var'],"_split_words ($s2)");
+is_deeply([Hash::KeyMorpher::_split_words($s3)],['my','var'],"_split_words ($s3)");
+is_deeply([Hash::KeyMorpher::_split_words($s4)],['my','bad','var'],"_split_words ($s4)");
+is_deeply([Hash::KeyMorpher::_split_words($s4)],['my','bad','var'],"_split_words ($s4)");
+is_deeply([Hash::KeyMorpher::_split_words($s5)],['myvar'],"_split_words ($s5)");
+is_deeply([Hash::KeyMorpher::_split_words($s6)],['myvar'],"_split_words ($s6)");
 
 # to_camel
 is(to_camel($s1),'MyVar',"to_camel ($s1)");
