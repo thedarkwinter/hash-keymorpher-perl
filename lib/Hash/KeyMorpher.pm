@@ -4,7 +4,7 @@ package Hash::KeyMorpher;
 
 =head1 NAME
 
-Hash::KeyMorpher
+Hash::KeyMorpher - Deep converter for naming conventions of hash keys
 
 =head1 DESCRIPTION
 
