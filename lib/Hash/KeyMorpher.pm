@@ -88,7 +88,7 @@ Perl Arstistic License
 use 5.010;
 use warnings;
 use strict;
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use base qw(Exporter);
 our @EXPORT = qw(to_mixed to_camel to_under to_delim key_morph);

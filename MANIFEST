@@ -2,6 +2,7 @@ Makefile.PL
 MANIFEST
 Changes
 README
+LICENSE
 lib/Hash/KeyMorpher.pm
 t/000-load.t
 t/001-strings.t

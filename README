@@ -30,6 +30,7 @@ use Hash::Keymorpher qw (key_morph to_camel to_mixed to_delim); # import specifi
 $res = to_camel('my_string'); # MyString
 $res = to_mixed('my_string'); # myString
 $res = to_under('myString');  # my_string
+$res = to_delim('myString','-');  # my-string
 
 # To morph keys in a hash
 # The hash is the first parameter,
